@@ -2,6 +2,8 @@ const PORT = process.env.PORT || 3000; // So we can run on heroku || (OR) localh
 
 const path = require('path');
 
+const cors = require('cors');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -17,7 +19,9 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
@@ -35,25 +39,63 @@ app.use(shopRoutes);
 app.use(errorController.get404);
 
 
-mongoose
-.connect('mongodb+srv://JimTang:love0621@cluster0.hy1kl.mongodb.net/shop?retryWrites=true&w=majority')
-.then(result =>{
+const corsOptions = {
+  origin: "https://cse341prove04.herokuapp.com/",
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 
-  User.findOne()
-  .then(user =>{
-    if(!user) {
-      const user = new User({
-        name: 'Jim',
-        email: 'after062111@gmail.com',
-        cart:{
-          items: []
+const options = {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  family: 4
+};
+
+const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://JimTang:love0621@cluster0.hy1kl.mongodb.net/shop?retryWrites=true&w=majority";
+
+mongoose
+  .connect(MONGODB_URL, options)
+  .then(result => {
+    User.findOne()
+      .then(user => {
+        if (!user) {
+          const user = new User({
+            name: 'Jim',
+            email: 'after062111@gmail.com',
+            cart: {
+              items: []
+            }
+          });
+          user.save()
         }
-      });
-      user.save()
-    }
+      })
+    app.listen(PORT, () => console.log(`Listening on ${PORT}`));
   })
-  app.listen(PORT, () => console.log(`Listening on ${PORT}`));
-})
-.catch(err =>{
-  console.log(err)
-});
+  .catch(err => {
+    console.log(err)
+  });
+
+// mongoose
+// .connect('mongodb+srv://JimTang:love0621@cluster0.hy1kl.mongodb.net/shop?retryWrites=true&w=majority')
+// .then(result =>{
+
+//   User.findOne()
+//   .then(user =>{
+//     if(!user) {
+//       const user = new User({
+//         name: 'Jim',
+//         email: 'after062111@gmail.com',
+//         cart:{
+//           items: []
+//         }
+//       });
+//       user.save()
+//     }
+//   })
+//   app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+// })
+// .catch(err =>{
+//   console.log(err)
+// });
