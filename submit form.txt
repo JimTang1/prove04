@@ -5,7 +5,7 @@ Please answer the questions in this text file and submit it to I-Learn.
 https://github.com/JimTang1/prove04
 
 2. Copy and paste the URL for your source code repository (e.g., GitHub):
-
+Heroku is not working.
 
 3. Briefly list and describe the elements of the application that are functioning. 
 Change all the connection in to mongoose and my own style.
@@ -13,7 +13,7 @@ Connet to mongodb.
 
 
 4. Briefly describe any pieces of the assignment that are not yet working correctly.
-No.
+Heroku is not working. Even I tried in many different way. I still cant make it work.
 
 5. Briefly describe the "coolest" thing you learned while completing this assignment.
 How to connect to MongoDB!!!! It is so cool to see how thing from the really basic to more easy way to do it.
