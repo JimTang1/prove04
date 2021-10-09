@@ -53,7 +53,7 @@ const options = {
   family: 4
 };
 
-const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://JimTang:love0621@cluster0.hy1kl.mongodb.net/shop?retryWrites=true&w=majority";
+const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://JimTang:love0621@cluster0.hy1kl.mongodb.net/shop";
 
 mongoose
   .connect(MONGODB_URL, options)
